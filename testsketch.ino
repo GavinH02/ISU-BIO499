@@ -102,48 +102,48 @@ void loop()
     HC_communicate();
 
 
-    // read photoresistor on Analog Input 0, and convert value in %
-    float rawSensorValue = analogRead(0);
-    float sensorValueInPercent = HCS_map(rawSensorValue, 0, 1023, 0, 100);
+    // // read photoresistor on Analog Input 0, and convert value in %
+     float rawSensorValue = analogRead(0);
+     float sensorValueInPercent = HCS_map(rawSensorValue, 0, 1023, 0, 100);
 
 
 
-    // use Analog Data 0 as a Metric in HITIPanel
-    // => to display the sensor value in %
-    HC_analogDataWrite(0, sensorValueInPercent);
+    // // use Analog Data 0 as a Metric in HITIPanel
+    // // => to display the sensor value in %
+     HC_analogDataWrite(0, sensorValueInPercent);
 
 
-    // use Analog Data 1 as a Setpoint in HITIPanel
-    // => to set a threshold value for the sensor
-    // => and to constrain this value between 0 and 100
-    float threshold = HC_analogDataRead_setpoint(1, 0, 100);
+    // // use Analog Data 1 as a Setpoint in HITIPanel
+    // // => to set a threshold value for the sensor
+    // // => and to constrain this value between 0 and 100
+     float threshold = HC_analogDataRead_setpoint(1, 0, 100);
 
 
-    // use Digital Data 0 as an Indicator in HITIPanel
-    // => which turns on if the sensor value exceeds the threshold value
-    bool indicatorValue = (sensorValueInPercent > threshold);
-    HC_digitalDataWrite(0, indicatorValue);
+    // // use Digital Data 0 as an Indicator in HITIPanel
+    // // => which turns on if the sensor value exceeds the threshold value
+     bool indicatorValue = (sensorValueInPercent > threshold);
+     HC_digitalDataWrite(0, indicatorValue);
 
 
-    // use Digital Data 1 as a Switch in HITIPanel
-    // => to toggle the servo between 2 positions
-    //if (HC_digitalDataRead(1))
-        // if Switch is activated, move Servo to position 169.3°
-        //HC_servoWrite(8, 169300);
-    //else
-        // if Switch is deactivated, move Servo back to position 12.8°
-     //   HC_servoWrite(8, 12800);
+    // // use Digital Data 1 as a Switch in HITIPanel
+    // // => to toggle the servo between 2 positions
+     if (HC_digitalDataRead(1))
+    //     // if Switch is activated, move Servo to position 169.3°
+         HC_servoWrite(8, 169300);
+    else
+         //if Switch is deactivated, move Servo back to position 12.8°
+     HC_servoWrite(8, 12800);
 
 
-    // use Digital Data 2 as a Button in HITIPanel
-    // => to increment a counter
-    if (HC_digitalDataRead_click(2))
-        // when Button is clicked, increment counter
+    // // use Digital Data 2 as a Button in HITIPanel
+    // // => to increment a counter
+     if (HC_digitalDataRead_click(2))
+    //     // when Button is clicked, increment counter
         clickCounter++;
 
-    // use Analog Data 2 as a Metric in HITIPanel
-    // => to display the counter value
-    HC_analogDataWrite(2, clickCounter);
+    // // use Analog Data 2 as a Metric in HITIPanel
+    // // => to display the counter value
+     HC_analogDataWrite(2, clickCounter);
 
 
 // This is the code the makes the car move from the example
